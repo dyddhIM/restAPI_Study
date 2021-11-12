@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userInfoMapper">
+	<resultMap type="com.todo.api.VO.UserInfoVO" id="userInfoMap">
+		<result property="userId" column="USER_ID"/>
+		<result property="password" column="PASSWORD"/>
+		<result property="name" column="NAME"/>
+		<result property="cellPhone" column="CELL_PHONE"/>
+		<result property="birthDay" column="BIRTH_DAY"/>
+		<result property="registDate" column="REGIST_DATE"/>
+		<result property="changeDate" column="CHANGE_DATE"/>	
+	</resultMap>
+
+	<!-- 회원가입  -->
+	<insert id="userInfoMapper.userRegistInsert" >
+		INSERT INTO USER
+			(USER_ID, PASSWORD, NAME, CELL_PHONE, BIRTH_DAY, REGIST_DATE, CHANGE_DATE)
+		VALUES(
+			#{userId}, #{password}, #{name}, #{cellPhone}, #{birthDay}, SYSDATE(), SYSDATE()
+		)
+	</insert>
+	
+	<select id="userInfoMapper.selectUserIdAt" resultType="String" parameterType="String">
+		SELECT CASE WHEN USER.CHK = 1 THEN 'N'
+				ELSE 'Y' END CHK_AT
+		FROM (
+				SELECT COUNT(*) CHK
+				FROM USER
+				WHERE USER_ID = #{userId}
+		) USER;
+	</select>
+	
+	<!-- 유저 정보 조회 -->
+	<select id="userInfoMapper.uerInfoSelect" resultMap = "userInfoMap" parameterType="map">
+		SELECT USER_ID, PASSWORD, NAME, CELL_PHONE, BIRTH_DAY
+		FROM USER
+		WHERE USER_ID = #{userId}
+	</select>
+	
+	
+
+
+</mapper>
