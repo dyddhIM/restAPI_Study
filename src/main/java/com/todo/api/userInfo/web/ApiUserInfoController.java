@@ -75,6 +75,7 @@ public class ApiUserInfoController {
 		return modelAndView;
 	}
 
+	// 개인정보 변경
 	@PutMapping(value = "/user/userInfo")
 	public ModelAndView updateUserInfo(UserInfoVO userInfoVO) {
 		ModelAndView modelAndView = new ModelAndView("jsonView");

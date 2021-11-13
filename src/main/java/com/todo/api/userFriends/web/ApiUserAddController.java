@@ -14,7 +14,7 @@ import com.todo.api.userFriends.service.UserAddService;
 import com.todo.api.userInfo.service.UserInfoVO;
 
 @RestController
-@RequestMapping("/todo/api")
+@RequestMapping("/api/todo")
 public class ApiUserAddController {
 
 	@Autowired

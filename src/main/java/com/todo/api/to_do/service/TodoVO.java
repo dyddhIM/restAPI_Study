@@ -1,17 +1,16 @@
-package com.todo.api.todos.service;
+package com.todo.api.to_do.service;
+
+import com.todo.api.common.commonVO;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class TodoVO {
+public class TodoVO extends commonVO {
 
 	// 번호
 	private int seqSN;
-
-	// 작성자 id
-	private String userId;
 
 	// 단위 (일, 주, 월 : D, W, M)
 	private String todoUnit;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="todoInfoMapper">
+<mapper namespace="todoMapper">
 
-<!-- <resultMap type="com.todo.api.todos.service.TodoVO" id="todoInfoMap">
+ <resultMap type="com.todo.api.to_do.service.TodoVO" id="todoInfoMap">
 	<result property="seqSN" column="SEQ_SN"/>
 	<result property="userId" column="USER_ID"/>
 	<result property="todoUnit" column="TODO_UNIT"/>
@@ -13,9 +13,10 @@
 	<result property="todoEnd" column="TODO_END"/>
 	<result property="todoSucessAt" column="TODO_SUCESS_AT"/>
 	<result property="todoChangeDt" column="TODO_CHANGE_DT"/>
+	<result property="registDate" 	column="REGIST_DATE"/>
 </resultMap>
 
-	<select id="todoInfoMapper.todoTypeSelectList" resultMap="todoInfoMap" parameterType="map">
+	<select id="todoMapper.todoTypeSelectList" resultMap="todoInfoMap" parameterType="map">
 		SELECT	SEQ_SN,
 				USER_ID,
 				TODO_UNIT,
@@ -26,31 +27,47 @@
 				TODO_SUCESS_AT,
 				TODO_CHANGE_DT
 		FROM TODO
-		WHERE TODO_UNIT = #{todoUnit}
+		WHERE 		TODO_UNIT = #{todoUnit}
+				AND REGIST_DT = #{userId}
 	</select>
 	
-	<insert id="todoInfoMapper.todoTypeInsert" >
+	<insert id="todoMapper.to_dosInsert" parameterType="todoVO" >
 		INSERT INTO TODO(
-						USER_ID,
 						TODO_UNIT,
 						TODO_TITLE,
 						TODO_CONTENT,
 						TODO_BEGIN,
 						TODO_END,
 						TODO_SUCESS_AT,
-						TODO_CHANGE_DT
+						REGIST_USER_ID,
+						REGIST_DATE
 					)
 		VALUES(
-				#{userId},
 				#{todoUnit},
 				#{todoTitle},
 				#{todoContent},
-				SYSDATE(),
-				SYSDATE(),
+				STR_TO_DATE(#{todoBegin},'%Y%m%d%H%i'),
+				STR_TO_DATE(#{todoEnd},'%Y%m%d%H%i'),
 				'N',
+				#{userId},
 				SYSDATE()
 		);
-	</insert> -->
+	</insert>
+	
+	<select id="todoMapper.to_doInfoSelect" parameterType="todoVO" resultMap="todoInfoMap">
+		SELECT	TODO_UNIT,
+				TODO_TITLE,
+				TODO_CONTENT,
+				TODO_BEGIN,
+				TODO_END,
+				CASE WHEN TODO_SUCESS_AT = 'Y' THEN '완료'
+					ELSE '진행중'
+					END AS TODO_SUCESS_AT,
+				REGIST_USER_ID AS USER_ID,
+				REGIST_DATE
+		FROM TO_DO
+		WHERE SEQ_SN = #{seqSN}			
+	</select>
 	
 
 </mapper>

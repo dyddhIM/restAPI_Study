@@ -1,14 +1,13 @@
 package com.todo.api.userInfo.service;
 
+import com.todo.api.common.commonVO;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserInfoVO {
-
-	// 아이디
-	private String userId;
+public class UserInfoVO extends commonVO {
 
 	// 비밀번호
 	private String password;
@@ -21,12 +20,6 @@ public class UserInfoVO {
 
 	// 생년월일
 	private int birthDay;
-
-	// 입력날짜
-	private String registDate;
-
-	// 변경일자
-	private String changeDate;
 
 	// 존재여부
 	private String chkAt;
