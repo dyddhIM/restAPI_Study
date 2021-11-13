@@ -18,13 +18,14 @@ public class UserServiceImpl implements UserService {
 	private TodoDao todoDao;
 
 	@Override
-	public List<UserInfoVO> selectList(UserInfoVO userInfoVO) throws Exception {
-		return todoDao.list("", userInfoVO);
+	public void insertUserRegest(UserInfoVO userInfoVO) throws Exception {
+		todoDao.insert("userInfoMapper.userRegistInsert", userInfoVO);
 	}
 
 	@Override
-	public void insertUserRegest(UserInfoVO userInfoVO) throws Exception {
-		todoDao.insert("userInfoMapper.userRegistInsert", userInfoVO);
+	public String selectUserIdAt(UserInfoVO userInfoVO) throws Exception {
+		String IdCheckAt = (String) todoDao.selectOne("userInfoMapper.selectUserIdAt", userInfoVO);
+		return IdCheckAt;
 	}
 
 	@Override
@@ -34,9 +35,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String selectUserIdAt(UserInfoVO userInfoVO) throws Exception {
-		String at = (String) todoDao.selectOne("userInfoMapper.selectUserIdAt", userInfoVO);
-		return at;
+	public String updateUserInfo(UserInfoVO userInfoVO) throws Exception {
+		String updateMessage = "";
+		todoDao.update("userInfoMapper.userInfoUpdate", userInfoVO);
+		return updateMessage;
 	}
-
 }
