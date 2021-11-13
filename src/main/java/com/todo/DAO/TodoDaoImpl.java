@@ -26,7 +26,7 @@ public class TodoDaoImpl extends SqlSessionDaoSupport implements TodoDao {
 	}
 
 	@Override
-	public void inert(String queryId, Object parameterObject) {
+	public void insert(String queryId, Object parameterObject) {
 		mybatisSupport.insert(queryId, parameterObject);
 	}
 
