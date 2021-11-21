@@ -31,7 +31,6 @@ public class ApiTodoController {
 		todoVO.setTodoUnit("Y");
 		List<TodoVO> to_doList = todoService.selectTo_dos(todoVO);
 
-//		modelAndView.addObject("selectTo_dos", to_doList);
 		return new ModelAndView("/to_do/to_doList", "selectTo_dos", to_doList);
 	}
 
