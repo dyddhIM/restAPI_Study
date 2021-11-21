@@ -13,4 +13,6 @@ public interface TodoDao {
 	public void update(String queryId, Object parameterObject) throws Exception;
 
 	public int updateInt(String queryId, Object parameterObject) throws Exception;
+
+	public void delete(String queryId, Object parameterObject) throws Exception;
 }

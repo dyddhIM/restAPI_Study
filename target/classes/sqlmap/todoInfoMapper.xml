@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="todoMapper">
+<mapper namespace="to_doMapper">
 
  <resultMap type="com.todo.api.to_do.service.TodoVO" id="todoInfoMap">
 	<result property="seqSN" column="SEQ_SN"/>
@@ -16,22 +16,25 @@
 	<result property="registDate" 	column="REGIST_DATE"/>
 </resultMap>
 
-	<select id="todoMapper.todoTypeSelectList" resultMap="todoInfoMap" parameterType="map">
-		SELECT	SEQ_SN,
-				USER_ID,
-				TODO_UNIT,
-				TODO_TITLE,
-				TODO_CONTENT,
-				TODO_BEGIN,
-				TODO_END,
-				TODO_SUCESS_AT,
-				TODO_CHANGE_DT
-		FROM TODO
-		WHERE 		TODO_UNIT = #{todoUnit}
-				AND REGIST_DT = #{userId}
+	<select id="to_doMapper.todoTypeSelectList" resultMap="todoInfoMap" parameterType="map">
+		WITH TODO_USER AS (
+			SELECT 	USER_ID
+			FROM 	USER 
+			WHERE USER_ID = #{userId}
+				UNION ALL
+			SELECT FRIEND_ID
+			FROM USER_FRIEND
+			WHERE 	USER_ID = #{userId}
+				AND FRIEND_SHOW_AT = 'Y'
+		)
+		SELECT B.*
+		FROM TODO_USER A
+			INNER JOIN TO_DO B
+				ON A.USER_ID = B.REGIST_USER_ID
+		WHERE B.TODO_UNIT = #{todoUnit}	
 	</select>
 	
-	<insert id="todoMapper.to_dosInsert" parameterType="todoVO" >
+	<insert id="to_doMapper.to_dosInsert" parameterType="todoVO" >
 		INSERT INTO TODO(
 						TODO_UNIT,
 						TODO_TITLE,
@@ -54,7 +57,7 @@
 		);
 	</insert>
 	
-	<select id="todoMapper.to_doInfoSelect" parameterType="todoVO" resultMap="todoInfoMap">
+	<select id="to_doMapper.to_doInfoSelect" parameterType="todoVO" resultMap="todoInfoMap">
 		SELECT	TODO_UNIT,
 				TODO_TITLE,
 				TODO_CONTENT,
@@ -68,6 +71,14 @@
 		FROM TO_DO
 		WHERE SEQ_SN = #{seqSN}			
 	</select>
+	
+	<delete id="to_doMapper.to_doDelete" parameterType="todoVO">
+		DELETE
+		FROM TO_DO
+		WHERE SEQ_SN=#{seqSN}
+	</delete>
+	
+	<update id="todo"></update>
 	
 
 </mapper>

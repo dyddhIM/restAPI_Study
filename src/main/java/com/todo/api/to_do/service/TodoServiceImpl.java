@@ -17,18 +17,17 @@ public class TodoServiceImpl implements TodoService {
 
 	@Override
 	public List<TodoVO> selectTo_dos(TodoVO todoVO) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return todoDao.list("to_doMapper.todoTypeSelectList", todoVO);
 	}
 
 	@Override
 	public void insertTo_dos(TodoVO todoVO) throws Exception {
-		todoDao.insert("todoMapper.to_dosInsert", todoVO);
+		todoDao.insert("to_doMapper.to_dosInsert", todoVO);
 	}
 
 	@Override
 	public TodoVO selectTo_do(TodoVO todoVO) throws Exception {
-		return (TodoVO) todoDao.selectOne("todoMapper.to_doInfoSelect", todoVO);
+		return (TodoVO) todoDao.selectOne("to_doMapper.to_doInfoSelect", todoVO);
 	}
 
 	@Override
@@ -39,8 +38,7 @@ public class TodoServiceImpl implements TodoService {
 
 	@Override
 	public void deleteTo_do(TodoVO todoVO) throws Exception {
-		// TODO Auto-generated method stub
-
+		todoDao.delete("to_doMapper.to_doDelete", todoVO);
 	}
 
 }
