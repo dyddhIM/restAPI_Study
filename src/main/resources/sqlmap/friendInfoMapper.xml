@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="friendInfoMapper">
-	<resultMap type="com.todo.api.VO.UserInfoVO" id="userInfoMap">
+	<resultMap type="com.todo.api.userInfo.service.UserInfoVO" id="userInfoMap">
 		<result property="userId" column="USER_ID"/>
 		<result property="password" column="PASSWORD"/>
 		<result property="name" column="NAME"/>

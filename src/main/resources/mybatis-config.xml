@@ -4,7 +4,7 @@
 
 
 <typeAliases>
-	<typeAlias type="com.todo.api.VO.UserInfoVO" alias="userInfoMap"/>
-	<typeAlias type="com.todo.api.VO.TodoVO" alias="todoInfoMap"/>
+	<typeAlias type="com.todo.api.userInfo.service.UserInfoVO" alias="userInfoVO"/>
+	<typeAlias type="com.todo.api.to_do.service.TodoVO" alias="todoVO"/>
 </typeAliases>
 </configuration>
