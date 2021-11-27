@@ -15,6 +15,7 @@ public class TodoServiceImpl implements TodoService {
 	@Qualifier("TodoDao")
 	private TodoDao todoDao;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<TodoVO> selectTo_dos(TodoVO todoVO) throws Exception {
 		return todoDao.list("to_doMapper.todoTypeSelectList", todoVO);

@@ -30,4 +30,61 @@ public class UserInfoVO extends commonVO {
 	// 친구 표시 여부
 	private String friendShowAt;
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCellPhone() {
+		return cellPhone;
+	}
+
+	public void setCellPhone(String cellPhone) {
+		this.cellPhone = cellPhone;
+	}
+
+	public int getBirthDay() {
+		return birthDay;
+	}
+
+	public void setBirthDay(int birthDay) {
+		this.birthDay = birthDay;
+	}
+
+	public String getChkAt() {
+		return chkAt;
+	}
+
+	public void setChkAt(String chkAt) {
+		this.chkAt = chkAt;
+	}
+
+	public String getSearchKeyword() {
+		return searchKeyword;
+	}
+
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
+	}
+
+	public String getFriendShowAt() {
+		return friendShowAt;
+	}
+
+	public void setFriendShowAt(String friendShowAt) {
+		this.friendShowAt = friendShowAt;
+	}
+
+	
 }
