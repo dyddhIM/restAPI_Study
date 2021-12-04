@@ -33,7 +33,7 @@ public class commonVO {
 	}
 
 	public String getChangeDate() {
-		return changeDate;
+		return changeDate;  
 	}
 
 	public void setChangeDate(String changeDate) {

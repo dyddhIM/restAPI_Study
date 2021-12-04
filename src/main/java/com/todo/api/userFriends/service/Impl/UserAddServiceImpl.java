@@ -24,7 +24,7 @@ public class UserAddServiceImpl implements UserAddService {
 
 	@Override
 	public List<UserInfoVO> selectFriendList(UserInfoVO userInfoVO) throws Exception {
-		return todoDao.list("", userInfoVO);
+		return todoDao.list("friendInfoMapper.selectFriendList", userInfoVO);
 	}
 
 	@Override

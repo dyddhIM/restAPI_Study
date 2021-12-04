@@ -29,6 +29,8 @@ public class UserInfoVO extends commonVO {
 
 	// 친구 표시 여부
 	private String friendShowAt;
+	
+	private String userFrindAt;
 
 	public String getPassword() {
 		return password;

@@ -26,7 +26,8 @@ public class ApiUserAddController {
 	public ModelAndView userAddSelectList(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO) throws Exception {
 
 		ModelAndView modelAndView = new ModelAndView();
-
+		
+		userInfoVO.setUserId("tester1");
 		List<UserInfoVO> list = userAddService.selectFriendList(userInfoVO);
 
 		modelAndView.addObject("friendList", list);

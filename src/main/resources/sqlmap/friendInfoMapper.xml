@@ -3,18 +3,38 @@
 
 <mapper namespace="friendInfoMapper">
 	<resultMap type="com.todo.api.userInfo.service.UserInfoVO" id="userInfoMap">
-		<result property="userId" column="USER_ID"/>
-		<result property="password" column="PASSWORD"/>
-		<result property="name" column="NAME"/>
-		<result property="cellPhone" column="CELL_PHONE"/>
-		<result property="birthDay" column="BIRTH_DAY"/>
-		<result property="registDate" column="REGIST_DATE"/>
-		<result property="changeDate" column="CHANGE_DATE"/>
+		<result property="userId"		column="USER_ID"/>
+		<result property="password" 	column="PASSWORD"/>
+		<result property="name" 		column="NAME"/>
+		<result property="cellPhone" 	column="CELL_PHONE"/>
+		<result property="birthDay" 	column="BIRTH_DAY"/>
+		<result property="registDate" 	column="REGIST_DATE"/>
+		<result property="changeDate" 	column="CHANGE_DATE"/>
 		<result property="friendShowAt" column="FRIEND_SHOW_AT"/>
+		<result property="userFrindAt" 	column="USER_FRIEND_AT"/>
 	</resultMap>
 
 	
-	
+	<select id="friendInfoMapper.selectFriendList" parameterType="userInfoVO" resultMap="userInfoMap">
+		SELECT CASE 
+				WHEN B.USER_ID IS NOT NULL
+					THEN 'Y'
+					ELSE 'N'
+				END USER_FRIEND_AT,
+				A.NAME,
+				A.USER_ID,
+				CASE 
+					WHEN B.FRIEND_SHOW_AT ='Y'
+						THEN 'Y'
+						ELSE 'N'
+				END FRIEND_SHOW_AT
+		FROM USER A
+			LEFT JOIN USER_FRIEND B
+				ON(		A.USER_ID = B.USER_ID
+					AND B.USER_ID = #{userId}
+				)
+		ORDER BY B.USER_ID DESC
+	</select>
 
 
 </mapper>
