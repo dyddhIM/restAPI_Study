@@ -35,19 +35,20 @@ public class ApiTodoController {
 	}
 
 	// to_do 작성
-	@PostMapping(value = "/to_dos")
+	@PostMapping(value = "/to_do")
 	public ModelAndView insertTo_do(TodoVO todoVO) {
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 
 		try {
 			todoVO.setTodoUnit("Y");
-			todoVO.setTodoTitle("to_do 작성테스트");
-			todoVO.setTodoContent("to_do 작성테스트 내용");
+			todoVO.setTodoPublicAt("Y");
+			todoVO.setTodoTitle("to_do 작성테스트_public_AT");
+			todoVO.setTodoContent("to_do 작성테스트 내용_public_AT");
 			todoVO.setTodoBegin("202101221740");
 			todoVO.setTodoEnd("202111132030");
-			todoVO.setUserId("dyddh1253");
+			todoVO.setUserId("tester1");
 
-			todoService.insertTo_dos(todoVO);
+			todoService.insertTo_do(todoVO);
 			modelAndView.addObject("insertToDoMessage", "to_do 작성을 완료하였습니다.");
 
 			return modelAndView;
@@ -70,11 +71,11 @@ public class ApiTodoController {
 
 	// to_do 상세내용 조회
 	@GetMapping(value = "/to_do/{to_doSeqSn}")
-	public ModelAndView selectTo_do(TodoVO todoVO, @PathVariable("to_doSeqSn") int to_doSeqSn) throws Exception {
+	public ModelAndView selectTo_doInfo(TodoVO todoVO, @PathVariable("to_doSeqSn") int to_doSeqSn) throws Exception {
 		TodoVO resulTo_doVo = new TodoVO();
 
 		todoVO.setSeqSN(to_doSeqSn);
-		resulTo_doVo = todoService.selectTo_do(todoVO);
+		resulTo_doVo = todoService.selectTo_doInfo(todoVO);
 
 		return new ModelAndView("/to_do/to_doInfo", "To_doInfo", resulTo_doVo);
 	}

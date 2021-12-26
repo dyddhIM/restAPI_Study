@@ -34,7 +34,7 @@ public class ApiUserInfoController {
 		userInfoVO.setCellPhone("010-5633-1416");
 		userInfoVO.setBirthDay(971229);
 
-		userService.insertUserRegest(userInfoVO);
+		userService.userRegist(userInfoVO);
 		modelAndView.addObject("registMessage", "회원가입을 완료했습니다.");
 		modelAndView.setViewName("jsonView");
 		return modelAndView;
@@ -42,14 +42,14 @@ public class ApiUserInfoController {
 
 	// 유저ID 존재여부 조회
 	// @RequestMapping(value = "user/selectUserIdAt.do", method = RequestMethod.GET)
-	@GetMapping(value = "/user/selectUserIdAt")
+	@GetMapping(value = "/user/userIdAtSelect")
 	public ModelAndView selectUserIdAt(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO) throws Exception {
 
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 
 		userInfoVO.setUserId("dyddh1253");
 
-		userInfoVO.setChkAt(userService.selectUserIdAt(userInfoVO));
+		userInfoVO.setChkAt(userService.selectUserIdUseAt(userInfoVO));
 
 		if (userInfoVO.getChkAt().equals("Y")) {
 			modelAndView.addObject("chkMessage", "사용 가능한 ID 입니다.");
@@ -64,13 +64,14 @@ public class ApiUserInfoController {
 	// @RequestMapping(value = "user/select.do", method = RequestMethod.GET)
 	@GetMapping(value = "/user/userInfo")
 	public ModelAndView selectUserInfo(UserInfoVO userInfoVO) throws Exception {
-
-		userInfoVO.setUserId("dyddh1253");
-		List<UserInfoVO> list = userService.selectUserInfo(userInfoVO);
+		UserInfoVO resultInfoVO = new UserInfoVO();
+		
+		resultInfoVO.setUserId("dyddh1253");
+		resultInfoVO = userService.selectUserInfo(resultInfoVO);
 
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 
-		modelAndView.addObject("userInfoSelect", list);
+		modelAndView.addObject("userInfoSelect", resultInfoVO);
 
 		return modelAndView;
 	}

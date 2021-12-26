@@ -31,6 +31,8 @@ public class TodoVO extends commonVO {
 	private String todoSucessAt;
 
 	private String todoChangeDt;
+	
+	private String todoPublicAt;
 
 	public int getSeqSN() {
 		return seqSN;
@@ -94,6 +96,14 @@ public class TodoVO extends commonVO {
 
 	public void setTodoChangeDt(String todoChangeDt) {
 		this.todoChangeDt = todoChangeDt;
+	}
+
+	public String getTodoPublicAt() {
+		return todoPublicAt;
+	}
+
+	public void setTodoPublicAt(String todoPublicAt) {
+		this.todoPublicAt = todoPublicAt;
 	}
 
 	

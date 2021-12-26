@@ -13,7 +13,7 @@
 	</resultMap>
 
 	<!-- 회원가입  -->
-	<insert id="userInfoMapper.userRegistInsert" >
+	<insert id="userInfoMapper.userRegist" parameterType="userInfoVO">
 		INSERT INTO USER
 			(USER_ID, PASSWORD, NAME, CELL_PHONE, BIRTH_DAY, REGIST_DATE, CHANGE_DATE)
 		VALUES(
@@ -21,7 +21,7 @@
 		)
 	</insert>
 	
-	<select id="userInfoMapper.selectUserIdAt" resultType="String" parameterType="String">
+	<select id="userInfoMapper.selectUserIdUseAt" resultType="String" parameterType="String">
 		SELECT CASE WHEN USER.CHK = 1 THEN 'N'
 				ELSE 'Y' END CHK_AT
 		FROM (
@@ -32,13 +32,13 @@
 	</select>
 	
 	<!-- 유저 정보 조회 -->
-	<select id="userInfoMapper.uerInfoSelect" resultMap = "userInfoMap" parameterType="map">
+	<select id="userInfoMapper.selectUserInfo" parameterType="userInfoVO" resultMap = "userInfoMap">
 		SELECT USER_ID, PASSWORD, NAME, CELL_PHONE, BIRTH_DAY
 		FROM USER
 		WHERE USER_ID = #{userId}
 	</select>
 	
-	<update id="userInfoMapper.userInfoUpdate" parameterType="userInfoVO">
+	<update id="userInfoMapper.updateUserInfo" parameterType="userInfoVO">
 		UPDATE USER 
 		SET
 			PASSWORD = #{password},

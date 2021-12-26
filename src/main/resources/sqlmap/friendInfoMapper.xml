@@ -16,24 +16,27 @@
 
 	
 	<select id="friendInfoMapper.selectFriendList" parameterType="userInfoVO" resultMap="userInfoMap">
-		SELECT CASE 
-				WHEN B.USER_ID IS NOT NULL
-					THEN 'Y'
-					ELSE 'N'
-				END USER_FRIEND_AT,
-				A.NAME,
-				A.USER_ID,
-				CASE 
-					WHEN B.FRIEND_SHOW_AT ='Y'
+		SELECT *
+		FROM(
+			SELECT  CASE 
+						WHEN B.FRIEND_ID IS NOT NULL
 						THEN 'Y'
 						ELSE 'N'
-				END FRIEND_SHOW_AT
-		FROM USER A
-			LEFT JOIN USER_FRIEND B
-				ON(		A.USER_ID = B.USER_ID
-					AND B.USER_ID = #{userId}
-				)
-		ORDER BY B.USER_ID DESC
+					END USER_FRIEND_AT,
+					A.USER_ID,
+					A.NAME,
+					CASE 
+						WHEN B.FRIEND_SHOW_AT ='Y'
+						THEN 'Y'
+						ELSE 'N'
+					END FRIEND_SHOW_AT
+			FROM USER A
+				LEFT JOIN USER_FRIEND B
+					ON(		A.USER_ID = B.FRIEND_ID
+						AND B.USER_ID = #{userId}
+					)	
+		) C
+		WHERE USER_FRIEND_AT ='Y'		
 	</select>
 
 

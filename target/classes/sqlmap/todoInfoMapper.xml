@@ -6,6 +6,7 @@
  <resultMap type="com.todo.api.to_do.service.TodoVO" id="todoInfoMap">
 	<result property="seqSN" column="SEQ_SN"/>
 	<result property="userId" column="USER_ID"/>
+	<result property="todoPublicAt" column="TODO_PUBLIC_AT"/>
 	<result property="todoUnit" column="TODO_UNIT"/>
 	<result property="todoTitle" column="TODO_TITLE"/>
 	<result property="todoContent" column="TODO_CONTENT"/>
@@ -16,7 +17,7 @@
 	<result property="registDate" 	column="REGIST_DATE"/>
 </resultMap>
 
-	<select id="to_doMapper.todoTypeSelectList" resultMap="todoInfoMap" parameterType="map">
+	<select id="to_doMapper.selectTodoTypeList" resultMap="todoInfoMap" parameterType="map">
 		WITH TODO_USER AS (
 			SELECT 	USER_ID
 			FROM 	USER 
@@ -31,12 +32,14 @@
 		FROM TODO_USER A
 			INNER JOIN TO_DO B
 				ON A.USER_ID = B.REGIST_USER_ID
-		WHERE B.TODO_UNIT = #{todoUnit}	
+		WHERE 		B.TODO_UNIT = #{todoUnit}	
+				AND TODO_PUBLIC_AT= 'Y'
 	</select>
 	
-	<insert id="to_doMapper.to_dosInsert" parameterType="todoVO" >
-		INSERT INTO TODO(
+	<insert id="to_doMapper.insertTo_do" parameterType="todoVO" >
+		INSERT INTO TO_DO(
 						TODO_UNIT,
+						TODO_PUBLIC_AT,
 						TODO_TITLE,
 						TODO_CONTENT,
 						TODO_BEGIN,
@@ -47,6 +50,7 @@
 					)
 		VALUES(
 				#{todoUnit},
+				#{todoPublicAt},
 				#{todoTitle},
 				#{todoContent},
 				STR_TO_DATE(#{todoBegin},'%Y%m%d%H%i'),
@@ -57,7 +61,7 @@
 		);
 	</insert>
 	
-	<select id="to_doMapper.to_doInfoSelect" parameterType="todoVO" resultMap="todoInfoMap">
+	<select id="to_doMapper.selectTo_doInfo" parameterType="todoVO" resultMap="todoInfoMap">
 		SELECT	TODO_UNIT,
 				TODO_TITLE,
 				TODO_CONTENT,
@@ -72,7 +76,7 @@
 		WHERE SEQ_SN = #{seqSN}			
 	</select>
 	
-	<delete id="to_doMapper.to_doDelete" parameterType="todoVO">
+	<delete id="to_doMapper.deleteTo_do" parameterType="todoVO">
 		DELETE
 		FROM TO_DO
 		WHERE SEQ_SN=#{seqSN}

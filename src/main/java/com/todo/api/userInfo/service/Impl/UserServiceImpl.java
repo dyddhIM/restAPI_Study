@@ -18,26 +18,26 @@ public class UserServiceImpl implements UserService {
 	private TodoDao todoDao;
 
 	@Override
-	public void insertUserRegest(UserInfoVO userInfoVO) throws Exception {
-		todoDao.insert("userInfoMapper.userRegistInsert", userInfoVO);
+	public void userRegist(UserInfoVO userInfoVO) throws Exception {
+		todoDao.insert("userInfoMapper.userRegist", userInfoVO);
 	}
 
 	@Override
-	public String selectUserIdAt(UserInfoVO userInfoVO) throws Exception {
-		String IdCheckAt = (String) todoDao.selectOne("userInfoMapper.selectUserIdAt", userInfoVO);
+	public String selectUserIdUseAt(UserInfoVO userInfoVO) throws Exception {
+		String IdCheckAt = (String) todoDao.selectOne("userInfoMapper.selectUserIdUseAt", userInfoVO);
 		return IdCheckAt;
 	}
 
 	@Override
-	public List<UserInfoVO> selectUserInfo(UserInfoVO userInfoVO) throws Exception {
+	public UserInfoVO selectUserInfo(UserInfoVO userInfoVO) throws Exception {
 
-		return todoDao.list("userInfoMapper.uerInfoSelect", userInfoVO);
+		return (UserInfoVO) todoDao.selectOne("userInfoMapper.selectUserInfo", userInfoVO);
 	}
 
 	@Override
 	public String updateUserInfo(UserInfoVO userInfoVO) throws Exception {
 		String updateMessage = "";
-		todoDao.update("userInfoMapper.userInfoUpdate", userInfoVO);
+		todoDao.update("userInfoMapper.updateUserInfo", userInfoVO);
 		return updateMessage;
 	}
 }
