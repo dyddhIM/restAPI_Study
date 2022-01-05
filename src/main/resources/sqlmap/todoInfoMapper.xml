@@ -82,7 +82,6 @@
 		WHERE SEQ_SN=#{seqSN}
 	</delete>
 	
-	<update id="todo"></update>
 	
 
 </mapper>

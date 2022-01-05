@@ -13,9 +13,20 @@
 		<result property="friendShowAt" column="FRIEND_SHOW_AT"/>
 		<result property="userFrindAt" 	column="USER_FRIEND_AT"/>
 	</resultMap>
-
 	
+	<resultMap type="com.todo.api.userFriends.service.FriendVO" id="FriendMap">
+		<result property="seqSn"		column="SEQ_SN"/>
+		<result property="userId" 		column="USER_ID"/>
+		<result property="requestId" 	column="REQUEST_ID"/>
+		<result property="stateAt" 		column="STATE_AT"/>
+
+	</resultMap>	
+
 	<select id="friendInfoMapper.selectFriendList" parameterType="userInfoVO" resultMap="userInfoMap">
+		/*
+			id = friendInfoMapper.selectFriendList
+			친구목록 조회
+		*/
 		SELECT *
 		FROM(
 			SELECT  CASE 
@@ -39,5 +50,77 @@
 		WHERE USER_FRIEND_AT ='Y'		
 	</select>
 
+	<insert id="friendInfoMapper.userFriendReigst" parameterType="FriendVO">
+		/*
+			id = friendInfoMapper.userFriendReigst
+			친구요청 
+		*/
+		<selectKey  keyProperty="seqSn" resultType="integer" order="BEFORE">
+			SELECT 	NVL(MAX(SEQ_SN),0)+1 
+			FROM 	USER_REQUEST_HISTORY
+			WHERE USER_ID = #{userId} AND REQUEST_ID = #{requestId}
+		</selectKey>
+		
+		INSERT INTO USER_REQUEST_HISTORY (
+											SEQ_SN,
+											USER_ID,
+											REQUEST_ID,
+											REGIST_DATE
+										)
+		VALUES(
+				#{seqSn}, #{userId}, #{requestId}, SYSDATE()
+			)										
+	</insert>
 
+	<select id="friendInfoMapper.selectFriendRegistList" parameterType="FriendVO" resultMap="FriendMap">
+		/*
+			id = friendInfoMapper.selectFriendRegistList
+			친구요청한 리스트 조회
+		*/
+		SELECT 	A.SEQ_SN, 
+				A.USER_ID, 
+				A.REQUEST_ID,
+				CASE 
+					WHEN A.STATE_AT = 'W' THEN "요청중"
+				END STATE_AT
+		FROM USER_REQUEST_HISTORY A
+			INNER JOIN(
+						SELECT MAX(SEQ_SN) AS SEQ_SN, USER_ID, REQUEST_ID
+						FROM USER_REQUEST_HISTORY
+						GROUP BY USER_ID,REQUEST_ID
+			) B
+			ON(
+				A.SEQ_SN = B.SEQ_SN
+				AND A.USER_ID = B.USER_ID
+				AND A.REQUEST_ID = B.REQUEST_ID)
+		WHERE 		A.STATE_AT = 'W'	
+				AND	A.USER_ID = #{userId}
+	</select>
+	
+	<select id="friendInfoMapper.selectGetFriendsRequeste" parameterType="FriendVO" resultMap="FriendMap">
+		/*
+			id = friendInfoMapper.selectGetFriendsRequeste
+			친구요청 받은 리스트 조회
+		 */
+		SELECT 	A.SEQ_SN, 
+				A.USER_ID, 
+				A.REQUEST_ID,
+				CASE 
+					WHEN A.STATE_AT = 'W' THEN "요청중"
+				END STATE_AT
+		FROM USER_REQUEST_HISTORY A
+			INNER JOIN(
+						SELECT MAX(SEQ_SN) AS SEQ_SN, USER_ID, REQUEST_ID
+						FROM USER_REQUEST_HISTORY
+						GROUP BY USER_ID,REQUEST_ID
+			) B
+			ON(
+				A.SEQ_SN = B.SEQ_SN
+				AND A.USER_ID = B.USER_ID
+				AND A.REQUEST_ID = B.REQUEST_ID)
+		WHERE 		A.STATE_AT = 'W'	
+				AND	A.REQUEST_ID = #{requestId}
+	</select>
+	
+	
 </mapper>

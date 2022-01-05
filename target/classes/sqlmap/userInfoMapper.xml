@@ -21,6 +21,7 @@
 		)
 	</insert>
 	
+	<!-- 아이디 사용여부 체크 -->
 	<select id="userInfoMapper.selectUserIdUseAt" resultType="String" parameterType="String">
 		SELECT CASE WHEN USER.CHK = 1 THEN 'N'
 				ELSE 'Y' END CHK_AT
@@ -38,13 +39,16 @@
 		WHERE USER_ID = #{userId}
 	</select>
 	
+	<!-- 개인정보 변경 -->
 	<update id="userInfoMapper.updateUserInfo" parameterType="userInfoVO">
 		UPDATE USER 
 		SET
 			PASSWORD = #{password},
+			<!-- 
 			NAME = #{name},
-			CELL_PHONE = #{cellPhone},
-			BIRTH_DAY = #{birthDay}
+			BIRTH_DAY = #{birthDay},-->
+ 			CELL_PHONE = #{cellPhone},
+			CHANGE_DATE = SYSDATE()
 		WHERE USER_ID = #{userId} 	
 	</update>
 

@@ -35,9 +35,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String updateUserInfo(UserInfoVO userInfoVO) throws Exception {
-		String updateMessage = "";
+	public void updateUserInfo(UserInfoVO userInfoVO) throws Exception {
 		todoDao.update("userInfoMapper.updateUserInfo", userInfoVO);
-		return updateMessage;
 	}
 }

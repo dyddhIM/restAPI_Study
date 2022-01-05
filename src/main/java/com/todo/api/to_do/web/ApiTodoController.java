@@ -36,7 +36,7 @@ public class ApiTodoController {
 
 	// to_do 작성
 	@PostMapping(value = "/to_do")
-	public ModelAndView insertTo_do(TodoVO todoVO) {
+	public ModelAndView insertTo_do(TodoVO todoVO) throws Exception {
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 
 		try {
@@ -83,7 +83,7 @@ public class ApiTodoController {
 	// to_do 삭제
 //	@RequestMapping(value = "/to_do/{to_doSeqSn}", method = RequestMethod.DELETE)
 	@DeleteMapping(value = "/to_do/{to_doSeqSn}")
-	public ModelAndView deleteTo_do(TodoVO todoVO, @PathVariable("to_doSeqSn") int to_doSeqSn) {
+	public ModelAndView deleteTo_do(TodoVO todoVO, @PathVariable("to_doSeqSn") int to_doSeqSn) throws Exception{
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 
 		try {

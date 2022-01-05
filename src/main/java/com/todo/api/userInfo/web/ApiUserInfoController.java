@@ -78,17 +78,22 @@ public class ApiUserInfoController {
 
 	// 개인정보 변경
 	@PutMapping(value = "/user/userInfo")
-	public ModelAndView updateUserInfo(UserInfoVO userInfoVO) {
+	public ModelAndView updateUserInfo(UserInfoVO userInfoVO) throws Exception {
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 		try {
 			userInfoVO.setUserId("dyddh1253");
 			userInfoVO.setPassword("updatePassword");
-			userInfoVO.setName("정보수정");
-			userInfoVO.setBirthDay(111111);
+			//userInfoVO.setName("정보수정");
+			//userInfoVO.setBirthDay(111111);
 			userInfoVO.setCellPhone("111-1111-1111");
 
-			userService.updateUserInfo(userInfoVO);
-			modelAndView.addObject("updateMessage", "개인정보 수정이 완료되었습니다.");
+			if(userInfoVO.getUserId()!=""|| userInfoVO.getUserId()==null) {
+				userService.updateUserInfo(userInfoVO);
+				modelAndView.addObject("updateMessage", "개인정보 수정이 완료되었습니다.");
+			}
+			else {
+				modelAndView.addObject("updateMessage", "개인정보 수정에 실패했습니다.");
+			}
 			return modelAndView;
 
 		} catch (Exception e) {

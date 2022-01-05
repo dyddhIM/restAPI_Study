@@ -13,6 +13,6 @@ public interface UserService {
 
 	public String selectUserIdUseAt(UserInfoVO userInfoVO) throws Exception;
 
-	public String updateUserInfo(UserInfoVO userInfoVO) throws Exception;
+	public void updateUserInfo(UserInfoVO userInfoVO) throws Exception;
 
 }
