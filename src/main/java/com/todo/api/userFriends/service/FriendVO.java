@@ -11,9 +11,6 @@ public class FriendVO extends commonVO{
 	
 	private int seqSn;
 	
-	// 요청 대상이된 아이디
-	private String requestId; 
-	
 	/**
 	 * 신청 상태
 	 * W : 대기
@@ -22,21 +19,34 @@ public class FriendVO extends commonVO{
 	 * */ 
 	private String stateAt;
 
+	// 친구 ID
+	private String friendId;
+
+	/**
+	 * 친구요청 여부
+	 * AA -> 친구 요청한 경우
+	 * BB -> 친구 요청 받은경우
+	 */
+	private String friendRegistAt;
+	
+	
+	
 
 	public int getSeqSn() {
 		return seqSn;
 	}
 
+
 	public void setSeqSn(int seqSn) {
 		this.seqSn = seqSn;
 	}
-
-	public String getRequestId() {
-		return requestId;
+	
+	public String getFriendId() {
+		return friendId;
 	}
-
-	public void setRequestId(String requestId) {
-		this.requestId = requestId;
+	
+	public void setFriendId(String friendId) {
+		this.friendId = friendId;
 	}
 
 	public String getStateAt() {
@@ -45,6 +55,16 @@ public class FriendVO extends commonVO{
 
 	public void setStateAt(String stateAt) {
 		this.stateAt = stateAt;
+	}
+
+
+	public String getFriendRegistAt() {
+		return friendRegistAt;
+	}
+
+
+	public void setFriendRegistAt(String friendRegistAt) {
+		this.friendRegistAt = friendRegistAt;
 	}
 
 }

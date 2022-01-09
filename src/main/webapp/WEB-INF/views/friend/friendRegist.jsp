@@ -20,7 +20,7 @@ NULL <br>
 	&nbsp;&nbsp;
 	${friendRegistList.userId}
 	&nbsp;&nbsp;
-	${friendRegistList.requestId}
+	${friendRegistList.friendId}
 	&nbsp;&nbsp;
 	${friendRegistList.stateAt}
 	<br>

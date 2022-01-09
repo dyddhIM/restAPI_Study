@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,16 +25,17 @@ public class ApiFriendController {
 
 	// 친구 리스트 조회
 	// @RequestMapping(value = "frendsList.do", method = RequestMethod.POST)
-	@GetMapping(value = "/frends")
-	public ModelAndView userAddSelectList(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO) throws Exception {
-
-		ModelAndView modelAndView = new ModelAndView();
+	@GetMapping(value = "/friends")
+	public ModelAndView userAddSelectList(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO, FriendVO friendVO) throws Exception {
+		ModelAndView modelAndView = new ModelAndView("jsonView");
 		
-		userInfoVO.setUserId("tester1");
-		List<UserInfoVO> list = friendService.selectFriendList(userInfoVO);
+		userInfoVO.setUserId("test1");
+		friendVO.setUserId(userInfoVO.getUserId());
+		
+		List<FriendVO> list = friendService.selectFriendList(friendVO);
 
 		modelAndView.addObject("friendList", list);
-		modelAndView.setViewName("jsonView");
+		
 		return modelAndView;
 	}
 
@@ -41,39 +44,80 @@ public class ApiFriendController {
 	// 추가 예정
 	
 	// 친구요청
-	@RequestMapping(value = "/friends/friendRequest", method = RequestMethod.POST)
+	@PostMapping(value = "/friends/friendRequest")
 	public ModelAndView friendRequest(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO, FriendVO friendVO) throws Exception {
-		friendVO.setUserId("tester1");
-		friendVO.setRequestId("test6");
-		//friendVO.setStateAt("W");
+		ModelAndView modelAndView = new ModelAndView("jsonView");
 		
-		ModelAndView modelAndView = new ModelAndView();
+		friendVO.setUserId("tester1");
+		friendVO.setFriendId("test6");
+
 		try {
 			friendService.insertUserFriendRegist(friendVO);
-			modelAndView.addObject("message", "친구추가 성공");
+			modelAndView.addObject("message", "친구요청 성공");
 		} catch (Exception e) {
-			modelAndView.addObject("message", "친구추가 실패"); 
+			modelAndView.addObject("message", "친구요청 실패");
+			e.printStackTrace();
 		}
-		modelAndView.setViewName("jsonView");
+		
 		return modelAndView;
 	}
 
 	// 친구요청한 목록
-	@RequestMapping(value = "/friends/friendsRequests", method = RequestMethod.GET)
+	@GetMapping(value = "/friends/friendsRequests")
 	public ModelAndView friendsRequests(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO, FriendVO friendVO) throws Exception {
+		ModelAndView modelAndView = new ModelAndView("jsonView");
 
-		ModelAndView modelAndView = new ModelAndView();
-		friendVO.setUserId("tester1");
-		List<FriendVO> list  = friendService.selectFriendRegistList(friendVO);
-		return new ModelAndView("/friend/friendRegist", "registList", friendService.selectFriendRegistList(friendVO));
+		userInfoVO.setUserId("tester1");
+		friendVO.setUserId(userInfoVO.getUserId());
+		friendVO.setFriendRegistAt("AA");
+		
+		return new ModelAndView("/friend/friendRegist", "registList", friendService.selectFriendRequestAtList(friendVO));
 	}
 	
 	// 친구요청받은 목록
-		@RequestMapping(value = "/friends/getFriendRequestes", method = RequestMethod.GET)
-		public ModelAndView friendsRequestReceives(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO, FriendVO friendVO) throws Exception {
-			userInfoVO.setUserId("test6");
-			friendVO.setRequestId(userInfoVO.getUserId());
-			ModelAndView modelAndView = new ModelAndView();
-			return new ModelAndView("/friend/getFriendRequestes", "RequestList", friendService.selectGetFriendsRequeste(friendVO));
+	@GetMapping(value = "/friends/getFriendRequestes")
+	public ModelAndView friendsRequestReceives(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO, FriendVO friendVO) throws Exception {
+		ModelAndView modelAndView = new ModelAndView("jsonView");
+
+		userInfoVO.setUserId("test6");
+		friendVO.setUserId(userInfoVO.getUserId());
+		friendVO.setFriendRegistAt("BB");
+		
+		return new ModelAndView("/friend/getFriendRequestes", "RequestList", friendService.selectFriendRequestAtList(friendVO));
+	}
+	
+	//친구 관리 기능 수행
+	@PutMapping(value = "/friends/friendManage")
+	public ModelAndView friendManage (@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO, FriendVO friendVO) throws Exception {		
+		ModelAndView modelAndView = new ModelAndView("jsonView");
+		
+		friendVO.setUserId("tester1");
+		friendVO.setFriendId("test4");
+		friendVO.setStateAt("N");
+		
+		try {
+			if (friendVO.getStateAt()!= null ||friendVO.getStateAt()!="") {
+				if(friendVO.getStateAt() == "Y") {
+					// 친구요청 이력관리 테이블에 데이터 추가 ("Y")
+					friendService.insertUserFriendRegist(friendVO);
+
+					// 친구 테이블에 데이터 추가
+					friendService.insertFriend(friendVO);
+					modelAndView.addObject("message", "친구요청이 수락되었습니다."); 
+				}
+				else {
+					// 친구요청 이력관리 테이블에 데이터 추가("N")
+					friendService.insertUserFriendRegist(friendVO);
+					modelAndView.addObject("message", "친구요청이 거절되었습니다."); 
+				}
+			}
+		} catch (Exception e) {
+			modelAndView.addObject("message", "친구요청 실패");
+			e.printStackTrace();
 		}
+		
+		
+		return modelAndView;
+	}
+	
 }

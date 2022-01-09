@@ -13,14 +13,21 @@ public interface FriendService {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<UserInfoVO> selectFriendList(UserInfoVO userInfoVO) throws Exception;
+	public List<FriendVO> selectFriendList(FriendVO friendVO) throws Exception;
 
 	/**
 	 *  친구 관리
 	 * @param userInfoVO
 	 * @throws Exception
 	 */
-	public void updateUserAddSetting(UserInfoVO userInfoVO) throws Exception;
+	public void updateUserAddSetting(FriendVO userInfoVO) throws Exception;
+	
+	/**
+	 *  친구테이블에 데이터 추가
+	 * @param friendVO
+	 * @throws Exception
+	 */
+	public void insertFriend(FriendVO friendVO) throws Exception;
 
 	/**
 	 * 친구 요청
@@ -30,21 +37,15 @@ public interface FriendService {
 	public void insertUserFriendRegist(FriendVO friendVO) throws Exception;
 	
 	/**
-	 * 친구요청목록
+	 * 친구요청 여부에 따른 목록조회
 	 * @param friendVO
 	 * @return
 	 * @throws Exception
 	 */
-	public List<FriendVO> selectFriendRegistList(FriendVO friendVO) throws Exception;
+	public List<FriendVO> selectFriendRequestAtList(FriendVO friendVO) throws Exception;
 	
 	
-	/**
-	 * 친구요청받은 목록
-	 * @param friendVO
-	 * @return
-	 * @throws Exception
-	 */
-	public List<FriendVO> selectGetFriendsRequeste(FriendVO friendVO) throws Exception;
+	
 	
 	
 	

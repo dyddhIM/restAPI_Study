@@ -23,10 +23,9 @@ public class ApiUserInfoController {
 	private UserService userService;
 
 	// 회원가입
-	@PostMapping(value = "/user/userRegist")
-	public ModelAndView userRegist(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO) throws Exception {
-
-		ModelAndView modelAndView = new ModelAndView();
+	@PostMapping(value = "/user/userRegistAction")
+	public ModelAndView userRegistAction(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO) throws Exception {
+		ModelAndView modelAndView = new ModelAndView("jsonView");
 
 		userInfoVO.setUserId("insertTes1111");
 		userInfoVO.setPassword("test");
@@ -36,7 +35,6 @@ public class ApiUserInfoController {
 
 		userService.userRegist(userInfoVO);
 		modelAndView.addObject("registMessage", "회원가입을 완료했습니다.");
-		modelAndView.setViewName("jsonView");
 		return modelAndView;
 	}
 
@@ -44,7 +42,6 @@ public class ApiUserInfoController {
 	// @RequestMapping(value = "user/selectUserIdAt.do", method = RequestMethod.GET)
 	@GetMapping(value = "/user/userIdAtSelect")
 	public ModelAndView selectUserIdAt(@ModelAttribute("UserInfoVO") UserInfoVO userInfoVO) throws Exception {
-
 		ModelAndView modelAndView = new ModelAndView("jsonView");
 
 		userInfoVO.setUserId("dyddh1253");
@@ -64,12 +61,13 @@ public class ApiUserInfoController {
 	// @RequestMapping(value = "user/select.do", method = RequestMethod.GET)
 	@GetMapping(value = "/user/userInfo")
 	public ModelAndView selectUserInfo(UserInfoVO userInfoVO) throws Exception {
+		ModelAndView modelAndView = new ModelAndView("jsonView");
+
 		UserInfoVO resultInfoVO = new UserInfoVO();
 		
 		resultInfoVO.setUserId("dyddh1253");
 		resultInfoVO = userService.selectUserInfo(resultInfoVO);
 
-		ModelAndView modelAndView = new ModelAndView("jsonView");
 
 		modelAndView.addObject("userInfoSelect", resultInfoVO);
 
@@ -80,6 +78,7 @@ public class ApiUserInfoController {
 	@PutMapping(value = "/user/userInfo")
 	public ModelAndView updateUserInfo(UserInfoVO userInfoVO) throws Exception {
 		ModelAndView modelAndView = new ModelAndView("jsonView");
+		
 		try {
 			userInfoVO.setUserId("dyddh1253");
 			userInfoVO.setPassword("updatePassword");
@@ -101,6 +100,24 @@ public class ApiUserInfoController {
 			modelAndView.addObject("updateMessage", "개인정보 수정에 실패했습니다.");
 			return modelAndView;
 		}
-
 	}
+	
+	// 로그인
+	@GetMapping(value = "/user/userLogin")
+	public ModelAndView userLogin(UserInfoVO infoVO) throws Exception{
+		ModelAndView modelAndView = new ModelAndView("jsonView");
+		
+		return new ModelAndView("/user/userLogin");
+		
+	}
+
+	// 회원가입
+	@GetMapping(value = "/user/userRegist")
+	public ModelAndView userRegist(UserInfoVO infoVO) throws Exception{
+		ModelAndView modelAndView = new ModelAndView("jsonView");
+		
+		return new ModelAndView("/user/userRegist");
+		
+	}
+	
 }

@@ -20,8 +20,8 @@ public class FriendServiceImpl implements FriendService {
 
 	
 	@Override
-	public void updateUserAddSetting(UserInfoVO userInfoVO) throws Exception {
-		todoDao.update("", userInfoVO);
+	public void updateUserAddSetting(FriendVO friendVO) throws Exception {
+		todoDao.update("", friendVO);
 		
 	}
 
@@ -31,19 +31,18 @@ public class FriendServiceImpl implements FriendService {
 	}
 	
 	@Override
-	public List<UserInfoVO> selectFriendList(UserInfoVO userInfoVO) throws Exception {
-		return todoDao.list("friendInfoMapper.selectFriendList", userInfoVO);
-	}
-
-	@Override
-	public List<FriendVO> selectFriendRegistList(FriendVO friendVO) throws Exception {
-		return todoDao.list("friendInfoMapper.selectFriendRegistList", friendVO);
-	}
-
-	@Override
-	public List<FriendVO> selectGetFriendsRequeste(FriendVO friendVO) throws Exception {
-		return todoDao.list("friendInfoMapper.selectGetFriendsRequeste", friendVO);
+	public void insertFriend(FriendVO friendVO) throws Exception {
+		todoDao.insert("friendInfoMapper.insertFriend", friendVO);
 	}
 	
+	@Override
+	public List<FriendVO> selectFriendList(FriendVO friendVO) throws Exception {
+		return todoDao.list("friendInfoMapper.selectFriendList", friendVO);
+	}
+
+	@Override
+	public List<FriendVO> selectFriendRequestAtList(FriendVO friendVO) throws Exception {
+		return todoDao.list("friendInfoMapper.selectFriendRequestAtList", friendVO);
+	}
 
 }
