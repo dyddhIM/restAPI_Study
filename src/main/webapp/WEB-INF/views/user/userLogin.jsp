@@ -19,7 +19,10 @@
     <script src="/js/bootstrap/js/bootstrap.min.js"></script>
     
 </head>
-<script type="text/javascript">
+<script type="text/javascript" >
+	$().ready(function(){
+		alert("하이");
+	});
 	
 </script>
 <body>

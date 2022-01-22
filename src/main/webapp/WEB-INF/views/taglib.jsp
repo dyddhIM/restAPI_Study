@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
-﻿<script src="/js/jquery-3.6.0.min.js"></script>﻿
+﻿<script src="/js/jquery-3.6.0.min.js"></script>
 ​
 <!DOCTYPE html>
 <html>
