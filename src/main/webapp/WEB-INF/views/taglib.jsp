@@ -5,11 +5,14 @@
 <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
 ﻿<script src="/js/jquery-3.6.0.min.js"></script>
 ​
-<!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
 
-</body>
-</html>
+ <!-- Bootstrap core CSS -->
+    <link href="/js/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template 
+    <link href="/css/signin.css" rel="stylesheet">
+-->
+    <!-- Bootstrap core JS-->
+    <script src="/js/bootstrap/js/bootstrap.min.js"></script>
+    
+    

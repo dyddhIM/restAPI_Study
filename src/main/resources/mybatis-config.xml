@@ -4,8 +4,10 @@
 
 
 <typeAliases>
-	<typeAlias type="com.todo.api.userInfo.service.UserInfoVO" alias="userInfoVO"/>
-	<typeAlias type="com.todo.api.to_do.service.TodoVO" alias="todoVO"/>
-	<typeAlias type="com.todo.api.userFriends.service.FriendVO" alias="friendVO"/>
+	<typeAlias type="com.api.user.service.UserInfoVO" alias="userInfoVO"/>
+	
+	<typeAlias type="java.util.Map" alias="Map"/>
+	<typeAlias type="java.util.HashMap" alias="HashMap"/>
+	<typeAlias type="java.util.List" alias="List"/>
 </typeAliases>
 </configuration>
