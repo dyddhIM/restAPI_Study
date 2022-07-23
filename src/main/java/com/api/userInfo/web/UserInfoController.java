@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.common.AES128;
-import com.api.user.service.UserInfoService;
-import com.api.user.service.UserInfoVO;
+import com.api.userInfo.service.UserInfoService;
+import com.api.userInfo.service.UserInfoVO;
 
 @RestController
 @RequestMapping("/users")
@@ -35,6 +35,18 @@ public class UserInfoController {
 		List<UserInfoVO> userIdInfoList = userInfoService.selectAllUserIdList();
 		
 		return userIdInfoList;
+	}
+	
+	@GetMapping(value = "/userCheckAt/{userId}")
+	public Map<String, String> userCheckAt (@PathVariable("userId")String userId) throws Exception{
+		Map<String, String> map = new HashMap();
+		
+		if(userInfoService.userCheckAt(userId)) //id 사용가능
+			map.put("message", "사용가능한 ID입니다.");
+		else		//id 사용불가
+			map.put("message", "현재 사용되고있는 ID입니다.");
+		
+		return map;
 	}
 	
 	//사용자 등록
@@ -113,8 +125,7 @@ public class UserInfoController {
 			userInfoVO.setUserId(userId);
 			
 			//userInfoVO = userInfoService.selectUserInfo(userId);
-			
-			
+
 			userInfoVO.setUserPw(aes128.encrypt(userInfoVO.getUserPw()));
 
 			userInfoService.userPasswordUpdate(userInfoVO);
@@ -149,30 +160,26 @@ public class UserInfoController {
 				userLoginMap.put("userLoginMessage", "로그인 성공!");
 			else
 				userLoginMap.put("userLoginMessage", "계정의 정보를 확인해주세요.");
-			
-		
 		} catch (Exception e) {
 			userLoginMap.put("userLoginMessage", "로그인 시도중에 에러가 발생했습니다.");
 			e.printStackTrace();
 		}
-		return userLoginMap;
-		
+		return userLoginMap;		
 	}
 	
 	// 계정탈퇴
-	@PatchMapping(value = "/secession/{userId}")
-	public String userDelete (@PathVariable("userId")String userId) throws Exception{
-		String message = "";
-		
+	@PutMapping(value = "/delUser/{userId}")
+	public Map<String, String> userDelete (@PathVariable("userId")String userId) throws Exception{
+		Map<String, String> map = new HashMap();
+
 		try {
-			//userInfoService.deleteUser(userId);
-			userInfoService.deleteUserInfoUpdate(userId);
-			message = "탈퇴되었습니다";
+			userInfoService.delUserInfoUpdate(userId);
+			map.put("message", "탈퇴되었습니다");
 			
 		} catch (Exception e) {
-			message = "탈퇴도중 실패했습니다";
+			map.put("message", "탈퇴도중 실패했습니다");
 			e.printStackTrace();
 		}
-		return message;
+		return map;
 	}
 }

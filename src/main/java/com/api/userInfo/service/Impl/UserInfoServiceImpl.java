@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.api.DAO.TodoDao;
-import com.api.user.service.UserInfoService;
-import com.api.user.service.UserInfoVO;
+import com.api.userInfo.service.UserInfoService;
+import com.api.userInfo.service.UserInfoVO;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService{
@@ -17,9 +17,19 @@ public class UserInfoServiceImpl implements UserInfoService{
 	@Qualifier("TodoDao")
 	private TodoDao todoDao;
 	
+	
 	@Override
 	public void registUserInfo(UserInfoVO userInfoVO) throws Exception {
 		todoDao.insert("userInfoMapper.UserRegistUserInfo", userInfoVO);
+	}
+	
+	@Override
+	public boolean userCheckAt(String userId) throws Exception {
+		int userIdCnt = (int) todoDao.selectOne("userInfoMapper.UserCheckAt", userId); 
+		if(userIdCnt == 0) // id 사용가능 
+			return true;
+		else // 계정 존재하므로 id 사용불가
+			return false;
 	}
 	
 	@Override
@@ -52,16 +62,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 	}
 
 	@Override
-	public void deleteUser(String userId) throws Exception {
-		todoDao.delete("userInfoMapper.UserDelete", userId);
+	public void delUserInfoUpdate(String userId) throws Exception {
+		todoDao.update("userInfoMapper.UserInfoDelUpdate", userId);		
 	}
-
-	@Override
-	public void deleteUserInfoUpdate(String userId) throws Exception {
-		todoDao.update("userInfoMapper.UserInfoDelete", userId);		
-	}
-
-
-	
-
 }

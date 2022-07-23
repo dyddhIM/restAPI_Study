@@ -4,7 +4,7 @@
 
 
 <typeAliases>
-	<typeAlias type="com.api.user.service.UserInfoVO" alias="userInfoVO"/>
+	<typeAlias type="com.api.userInfo.service.UserInfoVO" alias="userInfoVO"/>
 	
 	<typeAlias type="java.util.Map" alias="Map"/>
 	<typeAlias type="java.util.HashMap" alias="HashMap"/>
